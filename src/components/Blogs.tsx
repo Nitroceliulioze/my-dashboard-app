@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import User from "../interface/UserInterface";
+import PostItem from "./PostItem";
 
 interface BlogProps {
-    user: User | null;
-  }
+  user: User | null;
+}
 interface Post {
   userId: number;
   id: number;
@@ -11,10 +12,9 @@ interface Post {
   body: string;
 }
 
-function Blogs( {user}: BlogProps) {
+const Blogs = ({ user }: BlogProps) => {
   const [userPosts, setUserPosts] = useState<Post[]>([]);
-  console.log(user?.id)
-
+ 
   useEffect(() => {
     async function fetchPosts() {
       try {
@@ -33,13 +33,22 @@ function Blogs( {user}: BlogProps) {
     fetchPosts();
   }, [user?.id]);
 
+
+
+  const handleEditPost = (postId: number) => {
+    // Navigate to edit post page e.g., `app/posts/${postId}/edit`
+  };
+
+
+
   return (
     <div>
-      {userPosts.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
+       {userPosts.map((post) => (
+        <PostItem
+          key={post.id}
+          post={post}
+          onEditClick={() => handleEditPost(post.id)}
+        />
       ))}
     </div>
   );

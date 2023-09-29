@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import Sidebar from "./components/SideBar";
 import User from './interface/UserInterface';
 import Blogs from "./components/Blogs";
+import EditPost from "./components/EditPost";
 
-function App() {
+const App = () => {
   const [user, setUser] = useState<User | null>(null);
   const randomUserId = Math.floor(Math.random() * 10) + 1;
 
@@ -27,14 +28,18 @@ function App() {
 
     fetchUser();
   }, []);
+
+  console.log(user);
   return (
     <div style={{ display: "flex" }}>
+      {/* {user.name} */}
       <Sidebar user={user} />
-      <div style={{ flex: "1", padding: "20px" }}>
-        <Blogs user={user}/>
+      <div className="content">
+        <Blogs user={user}/> 
+        {/* <EditPost user={user}/> */}
       </div>
     </div>
   );
-}
+};
 
 export default App;
