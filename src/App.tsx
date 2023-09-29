@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import Sidebar from "./components/SideBar";
+import User from './interface/UserInterface';
+import Blogs from "./components/Blogs";
 
 function App() {
+  const [user, setUser] = useState<User | null>(null);
+  const randomUserId = Math.floor(Math.random() * 10) + 1;
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/users/${randomUserId}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    }
+
+    fetchUser();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex" }}>
+      <Sidebar user={user} />
+      <div style={{ flex: "1", padding: "20px" }}>
+        <Blogs user={user}/>
+      </div>
     </div>
   );
 }
