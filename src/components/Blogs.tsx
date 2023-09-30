@@ -3,20 +3,19 @@ import PostItem from "./PostItem";
 
 interface BlogProps {
   userposts: Post[];
-  onEditClick: any;
+  onEdit: (postId: number, newTitle: string, newBody: string) => void;
+  onDelete: (postId: number) => void;
 }
 
-const Blogs = ({ userposts }: BlogProps) => {
-  const handleEditPost = (postId: number) => {
-    console.log(`${postId} from blogs `);
-  };
+const Blogs = ({ userposts, onEdit, onDelete }: BlogProps) => {
   return (
     <div>
       {userposts.map((post) => (
         <PostItem
           key={post.id}
           post={post}
-          onEditClick={() => handleEditPost(post.id)}
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </div>

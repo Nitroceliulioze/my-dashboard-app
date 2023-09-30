@@ -3,17 +3,17 @@ import Post from "../interface/PostInterface";
 
 interface PostItemProps {
   post: Post;
-  onEditClick: () => void;
+  onEdit: (postId: number, newTitle: string, newBody: string) => void;
+  onDelete: (postId: number) => void;
 }
 
-const PostItem = ({ post }: PostItemProps) => {
+const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
   const [title, setTitle] = useState(post.title);
   const [body, setBody] = useState(post.body);
-  const [editOpen, setEditOpen] = useState(false); // Add editOpen to state
+  const [editOpen, setEditOpen] = useState(false);
 
   const handleEditPost = () => {
-    setEditOpen(true); // Set editOpen to true when editing
-    console.log(`${post.id} from blogs`);
+    setEditOpen(true);
   };
 
   const handleSave = async () => {
@@ -37,10 +37,11 @@ const PostItem = ({ post }: PostItemProps) => {
       }
 
       console.log("Post updated successfully");
+      onEdit(post.id, title, body); // Update state with new title and body
     } catch (error) {
       console.error("Error updating post:", error);
     }
-    setEditOpen(false)
+    setEditOpen(false);
   };
 
   const handleDelete = async () => {
@@ -57,12 +58,12 @@ const PostItem = ({ post }: PostItemProps) => {
       }
 
       console.log("Post deleted successfully");
+      onDelete(post.id); // Remove the post from state
     } catch (error) {
       console.error("Error deleting post:", error);
     }
-    setEditOpen(false)
+    setEditOpen(false);
   };
-
   return (
     <div className="blog" key={post.id}>
       <img
