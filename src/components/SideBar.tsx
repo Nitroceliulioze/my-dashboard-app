@@ -1,21 +1,13 @@
 import User from "../interface/UserInterface";
-import styled from 'styled-components';
 
 interface SidebarProps {
   user: User | null;
 }
 
-const SideBarWrapper = styled.div`
-width: 300px;
-textAlign: center;
-backgroundColor: white;
-boxShadow: 10px -1px 5px -2px rgba(0,0,0,0.16);
-`
 const Sidebar = ({ user }: SidebarProps) => {
   return (
     <div className="sidebar">
       <ul style={{ listStyle: 'none', padding: '0' }}>
-        <li><a href="/dashboard">Dashboard</a></li>
         {user && (
         <div>
           <h2>Hello {user.username}</h2>
@@ -26,7 +18,6 @@ const Sidebar = ({ user }: SidebarProps) => {
           
         </div>
       )}
-        <li><a href="/blogs">Blogs</a></li>
       </ul>
     </div>
   );

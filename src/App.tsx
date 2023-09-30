@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import Sidebar from "./components/SideBar";
-import User from './interface/UserInterface';
+import User from "./interface/UserInterface";
 import Blogs from "./components/Blogs";
-import EditPost from "./components/EditPost";
+import Post from "./interface/PostInterface";
 
-const App = () => {
+
+
+function App() {
   const [user, setUser] = useState<User | null>(null);
   const randomUserId = Math.floor(Math.random() * 10) + 1;
 
@@ -27,19 +29,40 @@ const App = () => {
     }
 
     fetchUser();
-  }, []);
+  }, [randomUserId]);
 
+  const [userPosts, setUserPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/users/${user?.id}/posts`
+        );
+        const allPosts = await response.json();
+        console.log(allPosts);
+
+        setUserPosts(allPosts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    }
+
+    fetchPosts();
+  }, [user?.id]);
+
+  const edit = () => {
+    console.log("from APP");
+  };
   console.log(user);
   return (
     <div style={{ display: "flex" }}>
-      {/* {user.name} */}
       <Sidebar user={user} />
       <div className="content">
-        <Blogs user={user}/> 
-        {/* <EditPost user={user}/> */}
+        <Blogs userposts={userPosts} onEditClick={edit} />
       </div>
     </div>
   );
-};
+}
 
 export default App;
