@@ -37,7 +37,7 @@ const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
       }
 
       console.log("Post updated successfully");
-      onEdit(post.id, title, body); // Update state with new title and body
+      onEdit(post.id, title, body); 
     } catch (error) {
       console.error("Error updating post:", error);
     }
@@ -58,7 +58,7 @@ const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
       }
 
       console.log("Post deleted successfully");
-      onDelete(post.id); // Remove the post from state
+      onDelete(post.id); 
     } catch (error) {
       console.error("Error deleting post:", error);
     }
