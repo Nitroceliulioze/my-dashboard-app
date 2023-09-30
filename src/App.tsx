@@ -7,7 +7,6 @@ import Post from "./interface/PostInterface";
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [userPosts, setUserPosts] = useState<Post[]>([]);
-  
   const randomUserId = Math.floor(Math.random() * 10) + 1;
 
   useEffect(() => {
@@ -49,19 +48,31 @@ function App() {
     }
   }, [user?.id]);
 
-  const handleEditPost = (postId: number, newTitle: string, newBody: string) => {
-    setUserPosts(prevPosts => prevPosts.map(post => post.id === postId ? {...post, title: newTitle, body: newBody} : post));
+  const handleEditPost = (
+    postId: number,
+    newTitle: string,
+    newBody: string
+  ) => {
+    setUserPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, title: newTitle, body: newBody } : post
+      )
+    );
   };
 
   const handleDeletePost = (postId: number) => {
-    setUserPosts(prevPosts => prevPosts.filter(post => post.id !== postId));
+    setUserPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
   };
 
   return (
     <div style={{ display: "flex" }}>
       <Sidebar user={user} />
       <div className="content">
-        <Blogs userposts={userPosts} onEdit={handleEditPost} onDelete={handleDeletePost} />
+        <Blogs
+          userposts={userPosts}
+          onEdit={handleEditPost}
+          onDelete={handleDeletePost}
+        />
       </div>
     </div>
   );
