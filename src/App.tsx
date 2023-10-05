@@ -13,7 +13,7 @@ function App() {
     async function fetchUser() {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/users/${randomUserId}`
+          `${process.env.BASE_URL}/users/${randomUserId}`
         );
 
         if (!response.ok) {
@@ -34,7 +34,7 @@ function App() {
     async function fetchPosts() {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/users/${user?.id}/posts`
+          `${process.env.BASE_URL}/users/${user?.id}/posts`
         );
         const allPosts = await response.json();
         setUserPosts(allPosts);
