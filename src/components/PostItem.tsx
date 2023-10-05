@@ -18,23 +18,26 @@ const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.BASE_URL}/posts/${post.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: post.id,
-          title,
-          body,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/posts/${post.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: post.id,
+            title,
+            body,
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       console.log("Post updated successfully");
-      onEdit(post.id, title, body);
+      onEdit(post.id, title, body); 
     } catch (error) {
       console.error("Error updating post:", error);
     }
@@ -43,16 +46,19 @@ const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${process.env.BASE_URL}/posts/${post.id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/posts/${post.id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       console.log("Post deleted successfully");
-      onDelete(post.id);
+      onDelete(post.id); 
     } catch (error) {
       console.error("Error deleting post:", error);
     }
@@ -74,30 +80,30 @@ const PostItem = ({ post, onEdit, onDelete }: PostItemProps) => {
       </button>
       {editOpen && (
         <>
-          <div className="modal-overlay"></div>
-          <div className="popup">
-            <h1>Edit Post</h1>
-            <div className="edit-form">
-              <label>Title:</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="edit-form">
-              <label>Body:</label>
-              <textarea
-                className="textarea"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-              />
-            </div>
-            <button onClick={handleSave}>Save</button>
-            <button className="delete-btn" onClick={handleDelete}>
-              Delete
-            </button>
+        <div className="modal-overlay"></div>
+        <div className="popup">
+          <h1>Edit Post</h1>
+          <div className="edit-form">
+            <label>Title:</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
+          <div className="edit-form">
+            <label>Body:</label>
+            <textarea
+            className="textarea"
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+            />
+          </div>
+          <button onClick={handleSave}>Save</button>
+          <button className="delete-btn" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
         </>
       )}
     </div>
