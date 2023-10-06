@@ -3,6 +3,8 @@ import Sidebar from "./components/SideBar";
 import User from "./interface/UserInterface";
 import Blogs from "./components/Blogs";
 import Post from "./interface/PostInterface";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Dashboard from "./components/UserDashboard";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -65,16 +67,26 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex" }}>
-      <Sidebar user={user} />
-      <div className="content">
-        <Blogs
-          userposts={userPosts}
-          onEdit={handleEditPost}
-          onDelete={handleDeletePost}
-        />
+    <Router>
+      <div style={{ display: "flex" }}>
+        <Sidebar user={user} />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Dashboard user={user} />} />
+            <Route
+              path="/blogs"
+              element={
+                <Blogs
+                  userposts={userPosts}
+                  onEdit={handleEditPost}
+                  onDelete={handleDeletePost}
+                />
+              }
+            />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

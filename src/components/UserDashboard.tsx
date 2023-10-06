@@ -6,9 +6,9 @@ interface DashboardProps {
 
 const Dashboard = ({ user }: DashboardProps) => {
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%'}}>
       {user && (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <h2>Hello {user.username}</h2>
           <img className="profile-pic"
             src="https://avatars.githubusercontent.com/u/102618622?v=4"

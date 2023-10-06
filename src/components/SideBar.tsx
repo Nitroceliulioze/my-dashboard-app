@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import User from "../interface/UserInterface";
 
 interface SidebarProps {
@@ -21,6 +22,10 @@ const Sidebar = ({ user }: SidebarProps) => {
           </div>
         )}
       </ul>
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Link to="/">Dashboard</Link>
+        <Link to="/blogs">User Blog Posts</Link>
+      </div>
     </div>
   );
 };
